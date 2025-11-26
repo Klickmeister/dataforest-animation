@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="70px" height="149px" viewBox="0 0 70 149" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>tree</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="tree">
+            <polygon id="arrow_3" fill="#FFFFFF" opacity="0" points="34.4996918 0 60 26.5989693 48.1109527 39 34.4996918 24.8020556 20.8884308 39 9 26.5989693"></polygon>
+            <polygon id="arrow_2" fill="#FFFFFF" opacity="0" points="34.9998893 36 65 67.6270998 53.2630874 80 34.9998893 60.7462671 16.73647 80 5 67.6270998"></polygon>
+            <polygon id="arrow_1" fill="#FFFFFF" points="35.0000278 73 70 109.649275 58.2050867 122 35.0000278 97.7014496 11.7950245 122 0 109.649275"></polygon>
+            <polygon id="block" fill="#FFFFFF" points="26 149 26 116 43 116 43 149"></polygon>
+        </g>
+    </g>
+</svg>
