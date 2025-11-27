@@ -22,6 +22,15 @@
   font-display: swap;
 }
 
+
+@font-face {
+  font-family: 'Satoshi Local';
+  src: url('satoshi-fonts/665843083224fde1b6d759ebf_Satoshi-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'Baskervville Local';
   src: url('baskervville/65842fdcd7f9182a33c4a733_baskervville-v16-latin-regular.woff2') format('woff2');
@@ -382,13 +391,13 @@ main {
   top: 50%;
   transform: translateY(-50%);
   font-family: 'Satoshi Local', 'Satoshi', 'Arial', sans-serif;
-  font-size: clamp(1.6rem, 4vw, 3.6rem);
-  font-weight: 600;
+  font-size: clamp(1.6rem, 4vw, 4rem);
+  font-weight: 900;
   text-align: left;
   line-height: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.35em;
+  gap: 0.1em;
   pointer-events: none;
   color: #f8fbff;
   width: 22%;
