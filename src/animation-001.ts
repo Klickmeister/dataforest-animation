@@ -61,7 +61,50 @@ mainTimeline
     duration: 600,
     ease: "inOutQuad",
   }, "+=500")
-  // .add({})
+
+  .label("rain-start")
+  .add([
+    "#canvas-art-1__rain-part-1",
+    "#canvas-art-1__rain-part-2",
+    "#canvas-art-1__rain-part-3",
+    "#canvas-art-1__rain-part-4",
+  ], {
+    y: { to: 45 }, // move rain parts down
+    duration: 3_200,
+    ease: "linear",
+  })
+  .add("#canvas-art-1__rain-part-1", { // fade in rain part 1
+    opacity: [0, 1],
+    duration: 600,
+    ease: "inQuad",
+  }, "<<")
+  .add("#canvas-art-1__rain-part-2", { // fade in rain part 2
+    opacity: [0, 1],
+    duration: 600,
+    ease: "inQuad",
+  }, "<<+=200")
+  .add("#canvas-art-1__rain-part-3", { // fade in rain part 3
+    opacity: [0, 1],
+    duration: 600,
+    ease: "inQuad",
+  }, "<<+=300")
+  .add('#canvas-art-1__rain-part-1', { // fade out rain part 1
+    opacity: 0,
+    duration: 300,
+    ease: "outQuad",
+  }, "rain-start+=600")
+  .add('#canvas-art-1__rain-part-2', { // fade out rain part 2
+    opacity: 0,
+    duration: 300,
+    ease: "outQuad",
+  }, "rain-start+=1400")
+  .add('#canvas-art-1__rain-part-3', { // fade out rain part 3
+    opacity: 0,
+    duration: 300,
+    ease: "outQuad",
+  }, "rain-start+=2200")
+  .label("rain-end")
+  
 
   .add([
     "#canvas-art-1__left-bracket",
