@@ -308,65 +308,10 @@ main {
   pointer-events: none;
 }
 
-[data-js-canvas] path {
+[data-js-canvas] path,
+[data-js-canvas] g {
   transform-box: fill-box;
   transform-origin: center;
-}
-
-#tree-icon {
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-#star {
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-#tree-spin {
-  opacity: 1;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-#brace-left,
-#brace-right {
-  opacity: 0;
-  transform: scale(0.8);
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.stage-grid {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-
-#canvas.show-grid .stage-grid {
-  opacity: 1;
-}
-
-.stage-grid line {
-  stroke: rgba(255, 255, 255, 0.22);
-  stroke-width: 1;
-}
-
-.stage-grid .axis {
-  stroke: rgba(125, 245, 216, 0.85);
-  stroke-width: 1.5;
-}
-
-.canvas-note {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #9cacd0;
 }
 
 @media (max-width: 900px) {

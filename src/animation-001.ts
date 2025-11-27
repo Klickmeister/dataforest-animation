@@ -22,7 +22,11 @@ function resetSprites() {
     elementSelector('rain-part-1'),
     elementSelector('rain-part-2'),
     elementSelector('rain-part-3'),
-    elementSelector('rain-part-4'),
+    elementSelector('tree-trunk'),
+    elementSelector('tree-bottom'),
+    elementSelector('tree-mid'),
+    elementSelector('tree-top'),
+    elementSelector('logo'),
   ], {
     opacity: 0,
     scale: 1,
@@ -64,7 +68,7 @@ mainTimeline
       )?.getAttribute("d") ?? "",
     duration: 600,
     ease: "inOutQuad",
-  }, "+=500")
+  }, "+=200")
   .label("rain-start")
   .add([
     elementSelector('rain-part-1'),
@@ -108,7 +112,27 @@ mainTimeline
   }, "rain-start+=2000")
   .label("rain-end")
   .label("tree-grow-start")
-  .label("tree-grow-end", "+=600") // pause after rain
+  .add(elementSelector('asterisk'), { // hide asterisk
+    opacity: 0,
+    scale: 0.25,
+    rotate: 60,
+    duration: 400,
+    ease: "inBack",
+  }, "rain-end-=2000")
+  .add([
+    elementSelector('tree-trunk'),
+    elementSelector('tree-bottom'),
+    elementSelector('tree-mid'),
+    elementSelector('tree-top'),
+  ], { // grow tree parts
+    opacity: [0, 1],
+    scale: [0.8, 1],
+    duration: 800,
+    delay: utils.stagger(250),
+    ease: "outBack",
+  }, "<")
+  .label("tree-grow-end")
+  .label("logo-start")
   .add([
     elementSelector('left-bracket'),
     elementSelector('right-bracket'),
@@ -121,11 +145,29 @@ mainTimeline
       )?.getAttribute("d") ?? "",
     duration: 600,
     ease: "inOutQuad",
-  }, "+=500")
+  }, "-=800")
+  .add([
+    elementSelector('left-bracket'),
+    elementSelector('right-bracket'),
+    elementSelector('tree-trunk'),
+    elementSelector('tree-bottom'),
+    elementSelector('tree-mid'),
+    elementSelector('tree-top'),
+  ], {
+    translateX: { to: -86 },
+    duration: 400,
+    ease: "inOutQuad",
+  }, '<<+=400')
+  .add(CANVAS_SELECTOR + " [data-js-anim-el='logo']", { // show logo
+    opacity: [0, 1],
+    scale: [0.8, 1],
+    duration: 300,
+    ease: "outBack",
+  }, "-=200")
   .label("end-sequence-start")
   .add(CANVAS_SELECTOR + " path", { // fade out everything
     opacity: 0,
     duration: 600,
     ease: "inQuad",
-  }, "+=1000")
+  }, "+=2000")
   .label("end-sequence-end");
