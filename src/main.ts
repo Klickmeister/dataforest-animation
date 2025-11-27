@@ -1,4 +1,5 @@
 import './style.css'
+import './animation-001';
 
 const canvas = document.querySelectorAll('[data-js-canvas]');
 
