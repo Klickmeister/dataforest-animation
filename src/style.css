@@ -1,48 +1,48 @@
 @font-face {
-  font-family: 'Satoshi Local';
-  src: url('assets/satoshi-fonts/65843083b5fa02f7c75b3d32_Satoshi-Regular.woff2') format('woff2');
+  font-display: swap;
+  font-family: Baskerville;
+  font-style: normal;
   font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+  src: url("/assets/Baskerville-Regular.woff2") format("woff2")
 }
 
 @font-face {
-  font-family: 'Satoshi Local';
-  src: url('assets/satoshi-fonts/65843083e526bb31f8258247_Satoshi-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
   font-display: swap;
+  font-family: Satoshi;
+  font-style: normal;
+  font-weight: 400;
+  src: url("/assets/Satoshi-Regular.woff2") format("woff2")
 }
 
 @font-face {
-  font-family: 'Satoshi Local';
-  src: url('assets/satoshi-fonts/65843083da15735bfe228e37_Satoshi-Bold.woff2') format('woff2');
+  font-display: swap;
+  font-family: Satoshi;
+  font-style: normal;
   font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-
-@font-face {
-  font-family: 'Satoshi Local';
-  src: url('assets/satoshi-fonts/665843083224fde1b6d759ebf_Satoshi-Black.woff2') format('woff2');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
+  src: url("/assets/Satoshi-Bold.woff2") format("woff2")
 }
 
 @font-face {
-  font-family: 'Baskervville Local';
-  src: url('assets/baskervville/65842fdcd7f9182a33c4a733_baskervville-v16-latin-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
   font-display: swap;
+  font-family: Satoshi;
+  font-style: normal;
+  font-weight: 300;
+  src: url("/assets/Satoshi-Light.woff2") format("woff2")
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Satoshi;
+  font-style: normal;
+  font-weight: 500;
+  src: url("/assets/Satoshi-Medium.woff2") format("woff2")
 }
 
 :root {
-  font-family: 'Satoshi Local', 'Satoshi', 'Arial', sans-serif;
+  font-family: 'Satoshi', 'Arial', sans-serif;
   color: #e8ecf7;
   line-height: 1.6;
+  font-weight: 400;
   background-color: #05070f;
 }
 
@@ -96,7 +96,8 @@ a {
 }
 
 h1, h2, h3, h4, .section-title {
-  font-family: 'Baskervville Local', 'Baskervville', 'Times New Roman', serif;
+  font-family: 'Baskerville', 'Times New Roman', serif;
+  font-weight: 400;
 }
 
 .nav-links {
@@ -281,81 +282,7 @@ main {
 }
 
 
-/* Canvas styles */
 
-[data-js-canvas] {
-  width: 100%;
-  max-width: 960px;
-  aspect-ratio: 16 / 9;
-  margin: 0;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(6px);
-}
-
-[data-js-canvas] svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-[data-js-canvas] path,
-[data-js-canvas] g {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-@media (max-width: 900px) {
-  #canvas {
-    max-width: 100%;
-  }
-
-  nav a {
-    margin-left: 14px;
-  }
-
-  .site-header {
-    background: rgba(5, 7, 15, 0.9);
-  }
-
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.canvas-caption {
-  position: absolute;
-  right: 4%;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: 'Satoshi Local', 'Satoshi', 'Arial', sans-serif;
-  font-size: clamp(1.6rem, 4vw, 4rem);
-  font-weight: 900;
-  text-align: left;
-  line-height: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.1em;
-  pointer-events: none;
-  color: #f8fbff;
-  width: 22%;
-  min-width: 120px;
-}
-
-.canvas-caption span {
-  display: block;
-  opacity: 0;
-  transform: translateY(15px);
-}
 
 section {
   padding: 90px 0;
@@ -428,4 +355,88 @@ footer {
   color: #6d7a98;
   background: #04060c;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+
+
+/* Canvas styles */
+
+[data-js-canvas] {
+  width: 100%;
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(6px);
+}
+
+[data-js-canvas] svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+[data-js-canvas] path,
+[data-js-canvas] g {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (max-width: 900px) {
+  #canvas {
+    max-width: 100%;
+  }
+
+  nav a {
+    margin-left: 14px;
+  }
+
+  .site-header {
+    background: rgba(5, 7, 15, 0.9);
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hero-visual {
+  position: relative;
+}
+
+.hero-visual__text {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Satoshi', 'Arial', sans-serif;
+  /* font-family: 'Baskervville Local', 'Baskervville', 'Times New Roman', serif; */
+  font-size: clamp(1.6rem, 6vw, 4rem);
+  font-weight: 900;
+  /* font-weight: 400; */
+  text-align: left;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+  pointer-events: none;
+  color: #f8fbff;
+  width: 22%;
+  min-width: 120px;
+}
+
+.hero-visual__text span {
+  display: block;
+  /* opacity: 0;
+  transform: translateY(15px); */
 }

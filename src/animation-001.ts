@@ -1,4 +1,4 @@
-import { createTimeline, utils } from "animejs";
+import { createTimeline, utils, spring } from "animejs";
 
 const CANVAS_SELECTOR = '[data-js-canvas="animation-001"]';
 const elementSelector = (selector: string) =>{
@@ -27,12 +27,20 @@ function resetSprites() {
     elementSelector('tree-mid'),
     elementSelector('tree-top'),
     elementSelector('logo'),
+    elementSelector('text-line-1'),
+    elementSelector('text-line-2'),
+    elementSelector('text-line-3'),
   ], {
     opacity: 0,
     scale: 1,
   });
 }
 resetSprites();
+
+const easeSpring = spring({
+      bounce: 0.34,
+      duration: 400
+    })
 
 const mainTimeline = createTimeline({
   autoplay: true,
@@ -49,13 +57,15 @@ mainTimeline
     duration: 600,
     ease: "outBack",
   })
-  .add(CANVAS_SELECTOR + " [data-js-anim-el='asterisk']", { // show asterisk
+  .label("show-asterisk-start")
+  .add(elementSelector('asterisk'), { // show asterisk
     opacity: [0, 1],
     scale: [0.25, 1],
     rotate: [-60, 0],
     duration: 600,
     ease: "outBack",
-  }, "<<+=100")
+  })
+  .label("show-asterisk-end")
   .add([
     elementSelector('left-bracket'),
     elementSelector('right-bracket'),
@@ -66,9 +76,11 @@ mainTimeline
           ? elementSelector('left-bracket-2')
           : elementSelector('right-bracket-2'),
       )?.getAttribute("d") ?? "",
-    duration: 600,
-    ease: "inOutQuad",
+    ease: easeSpring
   }, "+=200")
+  /**
+   * Rain animation
+   */
   .label("rain-start")
   .add([
     elementSelector('rain-part-1'),
@@ -111,6 +123,9 @@ mainTimeline
     ease: "outQuad",
   }, "rain-start+=2000")
   .label("rain-end")
+  /**
+   * Tree grow animation
+   */
   .label("tree-grow-start")
   .add(elementSelector('asterisk'), { // hide asterisk
     opacity: 0,
@@ -132,6 +147,9 @@ mainTimeline
     ease: "outBack",
   }, "<")
   .label("tree-grow-end")
+  /**
+   * Logo formation animation
+   */
   .label("logo-start")
   .add([
     elementSelector('left-bracket'),
@@ -157,8 +175,8 @@ mainTimeline
     translateX: { to: -86 },
     duration: 400,
     ease: "inOutQuad",
-  }, '<<+=400')
-  .add(CANVAS_SELECTOR + " [data-js-anim-el='logo']", { // show logo
+  })
+  .add(elementSelector('logo'), { // show logo
     opacity: [0, 1],
     scale: [0.8, 1],
     duration: 300,
@@ -170,4 +188,41 @@ mainTimeline
     duration: 600,
     ease: "inQuad",
   }, "+=2000")
-  .label("end-sequence-end");
+  .label("end-sequence-end")
+  /**
+   * Text animations
+   */
+  .label("text-start")
+  .add(elementSelector('text-line-1'), {
+    opacity: [0, 1],
+    scale: [0.8, 1],
+    translateY: [2, 0],
+    duration: 150,
+    ease: easeSpring,
+  }, "show-asterisk-start-=300")
+  .add(elementSelector('text-line-2'), {
+    opacity: [0, 1],
+    scale: [0.8, 1],
+    translateY: [2, 0],
+    duration: 150,
+    ease: easeSpring,
+  }, "show-asterisk-end-=100")
+  .add(elementSelector('text-line-3'), {
+    opacity: [0, 1],
+    scale: [0.8, 1],
+    translateY: [2, 0],
+    duration: 150,
+    ease: easeSpring,
+  }, "rain-end-=1000")
+  .add([
+    elementSelector('text-line-1'),
+    elementSelector('text-line-2'),
+    elementSelector('text-line-3'),
+  ], {
+    opacity: { to: 0},
+    translateY: 15,
+    duration: 150,
+    ease: "inQuad",
+  }, "tree-grow-end")
+  .add({}, {}, "+=2000") // pause before loop
+  ;
