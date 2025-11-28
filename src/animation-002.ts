@@ -1,6 +1,6 @@
 import { createTimeline, spring, utils } from "animejs";
 
-const CANVAS_SELECTOR = '[data-js-canvas="animation-001"]';
+const CANVAS_SELECTOR = '[data-js-canvas="animation-002"]';
 const elementSelector = (selector: string) => {
   return `${CANVAS_SELECTOR} [data-js-anim-el='${selector}']`;
 };
