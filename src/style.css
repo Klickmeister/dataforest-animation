@@ -296,6 +296,10 @@ section {
   color: #f6f8ff;
 }
 
+.flow > * + * {
+  margin-top: 24px;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -364,7 +368,6 @@ footer {
 [data-js-canvas] {
   width: 100%;
   aspect-ratio: 16 / 9;
-  margin: 0;
   border-radius: 0;
   position: relative;
   overflow: hidden;
@@ -410,7 +413,14 @@ footer {
 }
 
 .visual--green {
-  background: linear-gradient(145deg, #0d1a26 25%, #05101a 55%, #0a1622 100%);
+  background: #1E302D;
+}
+
+.visual--vertical {
+  aspect-ratio: 9 / 16;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .visual--hero {
@@ -440,6 +450,20 @@ footer {
   color: #f8fbff;
   width: 22%;
   min-width: 120px;
+}
+
+.visual--vertical .visual__text {
+  right: 50%;
+  top: auto;
+  bottom: 25%;
+  transform: translateX(50%);
+  text-align: center;
+  width: auto;
+  font-size: clamp(1.8rem, 7vw, 5rem);
+}
+
+.visual--vertical svg {
+  transform: scale(1.4);
 }
 
 .hero-visual__text span {

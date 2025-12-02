@@ -19,9 +19,9 @@ function resetSprites() {
     elementSelector("left-bracket-2"),
     elementSelector("right-bracket-2"),
     elementSelector("asterisk"),
-    elementSelector("rain-part-1"),
-    elementSelector("rain-part-2"),
-    elementSelector("rain-part-3"),
+    elementSelector("rain-part-1") + " path",
+    elementSelector("rain-part-2") + " path",
+    elementSelector("rain-part-3") + " path",
     elementSelector("tree-trunk"),
     elementSelector("tree-bottom"),
     elementSelector("tree-mid"),
@@ -93,35 +93,41 @@ mainTimeline
       )?.getAttribute("d") ?? "",
     ease: easeSpring,
   }, "<<")
-  .add(elementSelector("rain-part-1"), { // fade in rain part 1
+  .add(elementSelector("rain-part-1") + " path", { // fade in rain part 1
     opacity: [0, 1],
     duration: 600,
     ease: "inQuad",
+    delay: utils.stagger(70),
   }, "<<")
-  .add(elementSelector("rain-part-2"), { // fade in rain part 2
+  .add(elementSelector("rain-part-2") + " path", { // fade in rain part 2
     opacity: [0, 1],
     duration: 600,
     ease: "inQuad",
+    delay: utils.stagger(70),
   }, "<<+=200")
-  .add(elementSelector("rain-part-3"), { // fade in rain part 3
+  .add(elementSelector("rain-part-3") + " path", { // fade in rain part 3
     opacity: [0, 1],
     duration: 600,
     ease: "inQuad",
+    delay: utils.stagger(70),
   }, "<<+=250")
-  .add(elementSelector("rain-part-1"), { // fade out rain part 1
+  .add(elementSelector("rain-part-1") + " path", { // fade out rain part 1
     opacity: 0,
     duration: 300,
     ease: "outQuad",
+    delay: utils.stagger(70),
   }, "rain-start+=600")
-  .add(elementSelector("rain-part-2"), { // fade out rain part 2
+  .add(elementSelector("rain-part-2") + " path", { // fade out rain part 2
     opacity: 0,
     duration: 300,
     ease: "outQuad",
+    delay: utils.stagger(70),
   }, "rain-start+=1200")
-  .add(elementSelector("rain-part-3"), { // fade out rain part 3
+  .add(elementSelector("rain-part-3") + " path", { // fade out rain part 3
     opacity: 0,
     duration: 300,
     ease: "outQuad",
+    delay: utils.stagger(70),
   }, "rain-start+=2000")
   .label("rain-end")
   /**
