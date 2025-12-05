@@ -1,0 +1,39 @@
+@font-face {
+  font-display: swap;
+  font-family: Baskerville;
+  font-style: normal;
+  font-weight: 400;
+  src: url("/assets/Baskerville-Regular.woff2") format("woff2")
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Satoshi;
+  font-style: normal;
+  font-weight: 400;
+  src: url("/assets/Satoshi-Regular.woff2") format("woff2")
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Satoshi;
+  font-style: normal;
+  font-weight: 700;
+  src: url("/assets/Satoshi-Bold.woff2") format("woff2")
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Satoshi;
+  font-style: normal;
+  font-weight: 300;
+  src: url("/assets/Satoshi-Light.woff2") format("woff2")
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Satoshi;
+  font-style: normal;
+  font-weight: 500;
+  src: url("/assets/Satoshi-Medium.woff2") format("woff2")
+}

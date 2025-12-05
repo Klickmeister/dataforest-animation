@@ -34,6 +34,13 @@ function resetSprites() {
     opacity: 0,
     scale: 1,
   });
+
+  utils.set([
+    elementSelector("canvas")
+  ], {
+    translateX: -50,
+  });
+
 }
 resetSprites();
 
@@ -180,15 +187,20 @@ mainTimeline
     elementSelector("tree-top"),
   ], {
     translateX: { to: -86 },
-    duration: 400,
+    duration: 250,
     ease: "inOutQuad",
   })
+  .add(elementSelector("canvas"), { // move canvas to center
+    translateX: 0,
+    duration: 250,
+    ease: "inOutQuad",
+  }, "<<")
   .add(elementSelector("logo"), { // show logo
     opacity: [0, 1],
     scale: [0.8, 1],
     duration: 300,
     ease: "outBack",
-  }, "-=200")
+  }, "-=175")
   .label("end-sequence-start")
   .add(CANVAS_SELECTOR + " path", { // fade out everything
     opacity: 0,

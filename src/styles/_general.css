@@ -1,43 +1,3 @@
-@font-face {
-  font-display: swap;
-  font-family: Baskerville;
-  font-style: normal;
-  font-weight: 400;
-  src: url("/assets/Baskerville-Regular.woff2") format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: Satoshi;
-  font-style: normal;
-  font-weight: 400;
-  src: url("/assets/Satoshi-Regular.woff2") format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: Satoshi;
-  font-style: normal;
-  font-weight: 700;
-  src: url("/assets/Satoshi-Bold.woff2") format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: Satoshi;
-  font-style: normal;
-  font-weight: 300;
-  src: url("/assets/Satoshi-Light.woff2") format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: Satoshi;
-  font-style: normal;
-  font-weight: 500;
-  src: url("/assets/Satoshi-Medium.woff2") format("woff2")
-}
-
 :root {
   font-family: 'Satoshi', 'Arial', sans-serif;
   color: #e8ecf7;
@@ -363,33 +323,6 @@ footer {
 
 
 
-/* Canvas styles */
-
-[data-js-canvas] {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 0;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-[data-js-canvas] svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-[data-js-canvas] path,
-[data-js-canvas] g {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
 @media (max-width: 900px) {
   #canvas {
     max-width: 100%;
@@ -406,66 +339,4 @@ footer {
   .hero-grid {
     grid-template-columns: 1fr;
   }
-}
-
-.visual {
-  position: relative;
-}
-
-.visual--green {
-  background: #1E302D;
-}
-
-.visual--vertical {
-  aspect-ratio: 9 / 16;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.visual--hero {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-
-  max-width: 960px;
-}
-
-.visual__text {
-  position: absolute;
-  right: 10%;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: 'Satoshi', 'Arial', sans-serif;
-  /* font-family: 'Baskervville Local', 'Baskervville', 'Times New Roman', serif; */
-  font-size: clamp(1.6rem, 6vw, 4rem);
-  font-weight: 900;
-  /* font-weight: 400; */
-  text-align: left;
-  line-height: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.1em;
-  pointer-events: none;
-  color: #f8fbff;
-  width: 22%;
-  min-width: 120px;
-}
-
-.visual--vertical .visual__text {
-  right: 50%;
-  top: auto;
-  bottom: 25%;
-  transform: translateX(50%);
-  text-align: center;
-  width: auto;
-  font-size: clamp(1.8rem, 7vw, 5rem);
-}
-
-.visual--vertical svg {
-  transform: scale(1.4);
-}
-
-.hero-visual__text span {
-  display: block;
 }
