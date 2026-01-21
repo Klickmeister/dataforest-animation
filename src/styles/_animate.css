@@ -39,7 +39,7 @@
   margin-left: auto;
   margin-right: auto;
 }
-.visual--max.visual--vertical {
+.fullscreen .visual--vertical {
   max-width: 100% !important;
   max-height: 100vh !important;
 }
@@ -85,9 +85,8 @@
   font-size: clamp(1.8rem, 7vw, 5rem);
 }
 
-.visual--max.visual--vertical .visual__text{
+.fullscreen .visual--vertical .visual__text{
   font-size: 5.5vh;
-  
 }
 
 .visual--vertical svg {

@@ -32,21 +32,24 @@ The following parts are required to use the animation in your project:
 4. **Styles**: Include the styles from `styles/_animate.css` to ensure proper rendering of the animations.
 
 ## Export Animation as MP4
+
 You can export the animations as MP4 videos using the following command:
 
 ```bash
+npm run dev
 npm run export:mp4
 ```
 
-or 
+or
 
 ```bash
+npm run dev
 npm run export:mp4:4k
 ```
 
 ### Requirements
 
-This script uses Puppeteer to capture frames of the animation and FFmpeg to compile them into an MP4 file. Make sure you have FFmpeg installed on your system via e.g.
+This script uses Puppeteer to capture frames of the animation (from [export-canvas.html](http://localhost:5173/dataforest-animation/export-canvas.html)) and FFmpeg to compile them into an MP4 file. Make sure you have FFmpeg installed on your system via e.g.
 
 ```bash
 brew install ffmpeg
