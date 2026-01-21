@@ -47,6 +47,8 @@ npm run dev
 npm run export:mp4:4k
 ```
 
+The Frames are temporarily stored in the `./frames` folder and the resulting MP4 file is saved as the `./out.mp4` file.
+
 ### Requirements
 
 This script uses Puppeteer to capture frames of the animation (from [export-canvas.html](http://localhost:5173/dataforest-animation/export-canvas.html)) and FFmpeg to compile them into an MP4 file. Make sure you have FFmpeg installed on your system via e.g.
