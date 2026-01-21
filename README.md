@@ -55,13 +55,11 @@ This script uses Puppeteer to capture frames of the animation (from [export-canv
 brew install ffmpeg
 ```
 
-To update the animation duration, FPS, width, height, and output file name, you can set the following environment variables before running the export command:
+To update the animation FPS, width, and height, you can set the following environment variables before running the export command:
 
-- `DURATION`: Total duration of the animation in milliseconds (default: 5000)
 - `FPS`: Frames per second (default: 24)
 - `WIDTH`: Width of the output video in pixels (default: 1080)
 - `HEIGHT`: Height of the output video in pixels (default: 1920)
 - `CRF`: Constant Rate Factor for video quality (default: 18)
-- `OUT_FILE`: Name of the output MP4 file (default: out.mp4)
 
 To change to animation you have to update the `export-canvas.html` file in the `/` folder and the `export-canvas.ts` file in the `src/` folder.
