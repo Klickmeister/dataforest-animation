@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "export:mp4": "node scripts/export-mp4.mjs",
+    "export:mp4:4k": "FPS=60 WIDTH=2160 HEIGHT=3840 node scripts/export-mp4.mjs"
+
   },
   "devDependencies": {
     "typescript": "~5.9.3",
@@ -14,6 +17,7 @@
   },
   "dependencies": {
     "animejs": "^4.2.2",
+    "puppeteer": "^24.35.0",
     "remixicon": "^4.7.0"
   }
 }

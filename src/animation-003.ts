@@ -5,6 +5,11 @@ const elementSelector = (selector: string) => {
   return `${CANVAS_SELECTOR} [data-js-anim-el='${selector}']`;
 };
 
+if (document.querySelector(CANVAS_SELECTOR) === null) {
+  // don't run animation if canvas is not present
+  throw new Error("Animation canvas not found");
+}
+
 function resetSprites() {
   utils.set([ // first frame setup
     elementSelector("left-bracket"),
@@ -265,3 +270,9 @@ mainTimeline
   }, "logo-start")
   .add({}, {}, "+=2000") // pause before loop
 ;
+
+window.__CAPTURE__ = {
+  duration: mainTimeline.duration,
+  seek: (ms) => mainTimeline.seek(ms),
+  pause: () => mainTimeline.pause(),
+};

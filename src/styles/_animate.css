@@ -27,6 +27,8 @@
   position: relative;
 }
 
+
+
 .visual--green {
   background: #1E302D;
 }
@@ -36,6 +38,10 @@
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+}
+.visual--max.visual--vertical {
+  max-width: 100% !important;
+  max-height: 100vh !important;
 }
 
 .visual--hero {
@@ -67,6 +73,8 @@
   min-width: 120px;
 }
 
+
+
 .visual--vertical .visual__text {
   right: 50%;
   top: auto;
@@ -75,6 +83,11 @@
   text-align: center;
   width: auto;
   font-size: clamp(1.8rem, 7vw, 5rem);
+}
+
+.visual--max.visual--vertical .visual__text{
+  font-size: 5.5vh;
+  
 }
 
 .visual--vertical svg {

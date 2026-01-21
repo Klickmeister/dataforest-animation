@@ -5,6 +5,11 @@ const elementSelector = (selector: string) => {
   return `${CANVAS_SELECTOR} [data-js-anim-el='${selector}']`;
 };
 
+if (document.querySelector(CANVAS_SELECTOR) === null) {
+  // don't run animation if canvas is not present
+  throw new Error("Animation canvas not found");
+}
+
 function resetSprites() {
   utils.set([ // first frame setup
     elementSelector("left-bracket"),
@@ -44,7 +49,7 @@ const easeSpring = spring({
 
 const mainTimeline = createTimeline({
   autoplay: true,
-  loop: true,
+  loop: false,
 });
 
 mainTimeline
@@ -233,3 +238,9 @@ mainTimeline
   }, "tree-grow-end")
   .add({}, {}, "+=2000") // pause before loop
 ;
+
+window.__CAPTURE__ = {
+  duration: mainTimeline.duration,
+  seek: (ms) => mainTimeline.seek(ms),
+  pause: () => mainTimeline.pause(),
+};
