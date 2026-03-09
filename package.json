@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "export:mp4": "node scripts/export-mp4.mjs",
-    "export:mp4:4k": "FPS=60 WIDTH=2160 HEIGHT=3840 node scripts/export-mp4.mjs"
+    "export:mp4:4k": "FPS=60 WIDTH=2160 HEIGHT=3840 node scripts/export-mp4.mjs",
+    "export:mp4:4k-quer": "FPS=60 WIDTH=3840 HEIGHT=2160 node scripts/export-mp4.mjs"
 
   },
   "devDependencies": {
