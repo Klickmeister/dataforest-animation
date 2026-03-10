@@ -31,7 +31,7 @@ await page.goto(URL, { waitUntil: "networkidle0" });
 const duration = await page.evaluate(() => window.__CAPTURE__?.duration);
 if (!duration) {
   await browser.close();
-  throw new Error("window.__CAPTURE__ nicht gefunden. Hast du es im Code gesetzt?");
+  throw new Error("window.__CAPTURE__ not found");
 }
 
 // pause animation

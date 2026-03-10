@@ -10,37 +10,8 @@ if (document.querySelector(CANVAS_SELECTOR) === null) {
   throw new Error("Animation canvas not found");
 }
 
-const vineSelectors: string[] = [
-  elementSelector("vine-1"),
-  elementSelector("vine-2"),
-  elementSelector("vine-3"),
-  elementSelector("vine-4"),
-  elementSelector("vine-5"),
-  elementSelector("vine-6"),
-  elementSelector("vine-7"),
-  elementSelector("vine-8"),
-  elementSelector("vine-9"),
-  elementSelector("vine-10"),
-  elementSelector("vine-11"),
-  elementSelector("vine-12"),
-  elementSelector("vine-13"),
-];
-
+// Cache drawable vine selectors for animation
 const vineSelectorsDrawable: DrawableSVGGeometry[][] = [];
-const vineLightStreamSelectors: string[] = [];
-
-const vinePointSelectors: string[] = [
-  elementSelector("vine-point-1"),
-  elementSelector("vine-point-2"),
-  elementSelector("vine-point-3"),
-  elementSelector("vine-point-4"),
-  elementSelector("vine-point-5"),
-  elementSelector("vine-point-6"),
-  elementSelector("vine-point-7"),
-  elementSelector("vine-point-8"),
-  elementSelector("vine-point-9"),
-  elementSelector("vine-point-10"),
-];
 
 const VINE_LIGHT_LENGTH = 28;
 
@@ -62,8 +33,8 @@ function resetSprites() {
     elementSelector("center-tree-mid"),
     elementSelector("center-tree-top"),
     elementSelector("logo"),
-    ...vinePointSelectors,
-    ...vineSelectors,
+    elementSelector("vine-points") + " path",
+    elementSelector("vines") + " path",
     elementSelector("background-dots") + " path",
   ], {
     opacity: 0,
@@ -71,31 +42,18 @@ function resetSprites() {
   });
 
   // duplicate vines (if not already present)
-  vineSelectors.forEach((selector) => {
-    const element = document.querySelector(selector);
+  const vinesLightStreamGroup = utils.$(elementSelector("vines-light-stream"))?.[0];
+  vinesLightStreamGroup?.replaceChildren(); // clear previous clones
+  utils.$(elementSelector("vines") + " path").forEach((target) => {
 
-    // Regex for adding a "-clone" suffix at the end of the elementSelector
-    const suffix = "-clone";
-
-    const cloneSelector = selector.replace(
-      /\[data-js-anim-el=['"]?([^'"[\]]+?)['"]?\]/,
-      `[data-js-anim-el='$1${suffix}']`,
-    );
-    const cloneDataAttr = cloneSelector.match(
-      /\[data-js-anim-el=['"]?([^'"[\]]+?)['"]?\]/,
-    )?.[1];
-
-    if (element && document.querySelector(cloneSelector) === null) {
-      const clone = element.cloneNode(true) as SVGPathElement;
-      clone.dataset.jsAnimEl = `${cloneDataAttr}`;
-      clone.classList.add("dataforest-animation-api__vine--light-stream");
-      element.parentNode?.appendChild(clone);
-      vineLightStreamSelectors.push(cloneSelector);
-    }
+    const clone = target.cloneNode(true) as SVGPathElement;
+    clone.classList.add("dataforest-animation-api__vine--light-stream");
+    
+    vinesLightStreamGroup?.appendChild(clone); // clone vine into light stream group
   });
 
   utils.set( // set up vines for draw animation
-    vineLightStreamSelectors,
+    elementSelector("vines-light-stream") + " path",
     {
       strokeDasharray: (target, _i, _l) => {
         const length = (target as SVGPathElement).getTotalLength();
@@ -107,7 +65,7 @@ function resetSprites() {
     },
   );
 
-  vineSelectors.forEach((selector) => {
+  utils.$(elementSelector("vines") + " path").forEach((selector) => {
     vineSelectorsDrawable.push(svg.createDrawable(selector));
   });
 
@@ -123,7 +81,7 @@ const randomSeed = utils.random(0, 1_000_000);
 
 const mainTimeline = createTimeline({
   autoplay: true,
-  loop: true,
+  loop: false,
 });
 
 mainTimeline
@@ -156,6 +114,16 @@ mainTimeline
       )?.getAttribute("d") ?? "",
     ease: easeSpring,
   })
+  .add([
+    elementSelector("center-tree-trunk"),
+    elementSelector("center-tree-bottom"),
+    elementSelector("center-tree-mid"),
+    elementSelector("center-tree-top"),
+  ], {
+    translateY: 5,
+    duration: 200,
+    ease: 'inOutSine',
+  }, "<<")
   .label("trees-end")
   /**
    * API formation animation
@@ -168,7 +136,7 @@ mainTimeline
     duration: 250,
     delay: () => utils.random(0, 500, 50),
     ease: "outQuad",
-  }, '<<')
+  }, '<<-=100')
   .add(vineSelectorsDrawable, {
     draw: ["0 0", "0 1"],
     opacity: [1],
@@ -177,19 +145,19 @@ mainTimeline
     easing: "inOutSine",
   }, "-=200")
   .add([
-    ...vinePointSelectors,
+    elementSelector("vine-points") + " path",
   ], {
     opacity: [0, 1],
     duration: 800,
     easing: "easeInOutSine",
   }, "<<")
-  .add(vineLightStreamSelectors, {
+  .add(elementSelector('vines-light-stream') + " path", {
     opacity: [0, 1],
     duration: 250,
     delay: utils.createSeededRandom(randomSeed, 0, 2_000),
     ease: "outQuad",
   }, "-=400")
-  .add(vineLightStreamSelectors, {
+  .add(elementSelector('vines-light-stream') + " path", {
     strokeDashoffset: (target, i, _l) => {
       const length = (target as SVGPathElement).getTotalLength();
 
@@ -205,8 +173,8 @@ mainTimeline
     ease: "linear",
   }, "<<-=10")
   .add([
-    ...vinePointSelectors,
-    ...vineLightStreamSelectors,
+    elementSelector("vine-points") + " path",
+    elementSelector('vines-light-stream') + " path",
     elementSelector("background-dots") + " path",
   ], {
     opacity: 0,
@@ -240,16 +208,14 @@ mainTimeline
     ease: "inOutQuad",
   })
   .add([
-    elementSelector("left-tree-trunk"),
-    elementSelector("left-tree-bottom"),
-    elementSelector("left-tree-top"),
-    elementSelector("right-tree-trunk"),
-    elementSelector("right-tree-top"),
+    elementSelector("center-tree-trunk"),
+    elementSelector("center-tree-bottom"),
+    elementSelector("center-tree-mid"),
+    elementSelector("center-tree-top"),
   ], {
-    opacity: 0,
-    duration: 400,
-    ease: "inOutQuad",
-  }, "<<")
+    translateY: 0,
+    duration: 200,
+  }, "<<-=400")
   .add([
     elementSelector("left-bracket"),
     elementSelector("right-bracket"),
@@ -261,7 +227,7 @@ mainTimeline
     translateX: { to: -86 },
     duration: 400,
     ease: "inOutQuad",
-  })
+  }, "-=300")
   .add(elementSelector("logo"), { // show logo
     opacity: [0, 1],
     scale: [0.8, 1],
@@ -277,8 +243,6 @@ mainTimeline
   .label("end-sequence-end")
   .add({}, {}, "+=2000") // pause before loop
 ;
-
-// mainTimeline.seek(2280)
 
 window.__CAPTURE__ = {
   duration: mainTimeline.duration,
