@@ -1,4 +1,4 @@
-import { createTimeline, spring, utils } from "animejs";
+import { createTimeline, spring, svg, utils, type DrawableSVGGeometry } from "animejs";
 
 const CANVAS_SELECTOR = '[data-js-canvas="animation-003"]';
 const elementSelector = (selector: string) => {
@@ -9,6 +9,11 @@ if (document.querySelector(CANVAS_SELECTOR) === null) {
   // don't run animation if canvas is not present
   throw new Error("Animation canvas not found");
 }
+
+// Cache drawable vine selectors for animation
+const vineSelectorsDrawable: DrawableSVGGeometry[][] = [];
+
+const VINE_LIGHT_LENGTH = 28;
 
 function resetSprites() {
   utils.set([ // first frame setup
@@ -23,35 +28,47 @@ function resetSprites() {
     elementSelector("right-bracket-1"),
     elementSelector("left-bracket-2"),
     elementSelector("right-bracket-2"),
-    elementSelector("left-tree-trunk"),
-    elementSelector("left-tree-bottom"),
-    elementSelector("left-tree-top"),
     elementSelector("center-tree-trunk"),
     elementSelector("center-tree-bottom"),
     elementSelector("center-tree-mid"),
     elementSelector("center-tree-top"),
-    elementSelector("right-tree-trunk"),
-    elementSelector("right-tree-top"),
     elementSelector("logo"),
-    elementSelector("text-line-1"),
-    elementSelector("text-line-2"),
-    elementSelector("text-line-3"),
-    elementSelector("attack-left-1"),
-    elementSelector("attack-left-2"),
-    elementSelector("attack-left-3"),
-    elementSelector("attack-left-4"),
-    elementSelector("attack-left-5"),
-    elementSelector("attack-right-1"),
-    elementSelector("attack-right-2"),
-    elementSelector("attack-right-3"),
-    elementSelector("attack-right-3"),
-    elementSelector("attack-right-4"),
-    elementSelector("attack-right-5"),
-    elementSelector("attack-right-6"),
+    elementSelector("vine-points") + " path",
+    elementSelector("vines") + " path",
+    elementSelector("background-dots") + " path",
   ], {
     opacity: 0,
     scale: 1,
   });
+
+  // duplicate vines (if not already present)
+  const vinesLightStreamGroup = utils.$(elementSelector("vines-light-stream"))?.[0];
+  vinesLightStreamGroup?.replaceChildren(); // clear previous clones
+  utils.$(elementSelector("vines") + " path").forEach((target) => {
+
+    const clone = target.cloneNode(true) as SVGPathElement;
+    clone.classList.add("dataforest-animation-api__vine--light-stream");
+    
+    vinesLightStreamGroup?.appendChild(clone); // clone vine into light stream group
+  });
+
+  utils.set( // set up vines for draw animation
+    elementSelector("vines-light-stream") + " path",
+    {
+      strokeDasharray: (target, _i, _l) => {
+        const length = (target as SVGPathElement).getTotalLength();
+        return `${VINE_LIGHT_LENGTH} ${length}`;
+      },
+      strokeDashoffset: 0,
+      opacity: 0,
+      // strokeLinecap: "round",
+    },
+  );
+
+  utils.$(elementSelector("vines") + " path").forEach((selector) => {
+    vineSelectorsDrawable.push(svg.createDrawable(selector));
+  });
+
 }
 resetSprites();
 
@@ -60,9 +77,11 @@ const easeSpring = spring({
   duration: 400,
 });
 
+const randomSeed = utils.random(0, 1_000_000);
+
 const mainTimeline = createTimeline({
   autoplay: true,
-  loop: true,
+  loop: false,
 });
 
 mainTimeline
@@ -79,7 +98,6 @@ mainTimeline
     duration: 600,
     ease: "outBack",
   })
-
   /**
    * Tree grow animation
    */
@@ -94,91 +112,83 @@ mainTimeline
           ? elementSelector("left-bracket-2")
           : elementSelector("right-bracket-2"),
       )?.getAttribute("d") ?? "",
-    x: (_target, i, _l) => (i === 0 ? -20 : 20),
     ease: easeSpring,
   })
   .add([
-    elementSelector("left-tree-trunk"),
-    elementSelector("left-tree-bottom"),
-    elementSelector("left-tree-top"),
-  ], { // grow tree parts
-    opacity: [0, 1],
-    scale: [0.8, 1],
-    duration: 600,
-    delay: utils.stagger(150),
-    ease: "outBack",
+    elementSelector("center-tree-trunk"),
+    elementSelector("center-tree-bottom"),
+    elementSelector("center-tree-mid"),
+    elementSelector("center-tree-top"),
+  ], {
+    translateY: 5,
+    duration: 200,
+    ease: 'inOutSine',
   }, "<<")
-  .add([
-    elementSelector("right-tree-trunk"),
-    elementSelector("right-tree-top"),
-  ], { // grow tree parts
-    opacity: [0, 1],
-    scale: [0.8, 1],
-    duration: 600,
-    delay: utils.stagger(150),
-    ease: "outBack",
-  }, "<<+=200")
   .label("trees-end")
   /**
-   * DDoS formation animation
+   * API formation animation
    */
-  .label("ddos-start")
-  .add(elementSelector("attack-left-1"), {
-    translateX: [-200, 0],
-    translateY: [-40, 0],
-    opacity: [1, 1],
-    duration: 250,
-    ease: "outQuad",
-  })
-  .add(elementSelector("attack-left-2"), {
-    translateX: [-200, 0],
-    translateY: [-40, 0],
-    opacity: [1, 1],
-    duration: 250,
-    ease: "outQuad",
-  }, '<<+=50')
-  .add(elementSelector("attack-left-3"), {
-    translateX: [-200, 0],
-    translateY: [-40, 0],
-    opacity: [1, 1],
-    duration: 250,
-    ease: "outQuad",
-  }, '<<')
+  .label("api-start")
   .add([
-    elementSelector("attack-left-1"),
-    elementSelector("attack-left-2"),
-    elementSelector("attack-left-3"),
-    elementSelector("attack-left-4"),
-    elementSelector("attack-left-5"),
-    elementSelector("attack-right-1"),
-    elementSelector("attack-right-2"),
-    elementSelector("attack-right-3"),
-    elementSelector("attack-right-4"),
-    elementSelector("attack-right-5"),
-    elementSelector("attack-right-6"),
+    elementSelector("background-dots") + " path",
   ], {
-    scale: 1.5,
-    duration: 200,
-    ease: "linear",
-  }, "<")
+    opacity: [0, 1],
+    duration: 250,
+    delay: () => utils.random(0, 500, 50),
+    ease: "outQuad",
+  }, '<<-=100')
+  .add(vineSelectorsDrawable, {
+    draw: ["0 0", "0 1"],
+    opacity: [1],
+    duration: 600,
+    delay: () => utils.random(0, 500, 100),
+    easing: "inOutSine",
+  }, "-=200")
   .add([
-    elementSelector("attack-left-1"),
-    elementSelector("attack-left-2"),
-    elementSelector("attack-left-3"),
-    elementSelector("attack-left-4"),
-    elementSelector("attack-left-5"),
-    elementSelector("attack-right-1"),
-    elementSelector("attack-right-2"),
-    elementSelector("attack-right-3"),
-    elementSelector("attack-right-4"),
-    elementSelector("attack-right-5"),
-    elementSelector("attack-right-6"),
+    elementSelector("vine-points") + " path",
+  ], {
+    opacity: [0, 1],
+    duration: 800,
+    easing: "easeInOutSine",
+  }, "<<")
+  .add(elementSelector('vines-light-stream') + " path", {
+    opacity: [0, 1],
+    duration: 250,
+    delay: utils.createSeededRandom(randomSeed, 0, 2_000),
+    ease: "outQuad",
+  }, "-=400")
+  .add(elementSelector('vines-light-stream') + " path", {
+    strokeDashoffset: (target, i, _l) => {
+      const length = (target as SVGPathElement).getTotalLength();
+
+      // odd vines go left, even vines go right
+      if (i % 2 === 0) {
+        return [length + VINE_LIGHT_LENGTH, VINE_LIGHT_LENGTH];
+      }
+
+      return [-length - VINE_LIGHT_LENGTH, VINE_LIGHT_LENGTH];
+    },
+    duration: 2000,
+    delay: utils.createSeededRandom(randomSeed, 0, 2_000),
+    ease: "linear",
+  }, "<<-=10")
+  .add([
+    elementSelector("vine-points") + " path",
+    elementSelector('vines-light-stream') + " path",
+    elementSelector("background-dots") + " path",
   ], {
     opacity: 0,
-    duration: 100,
-    ease: "linear",
-  }, "<-=100")
-  .label("ddos-end")
+    duration: 250,
+    delay: () => utils.random(0, 500, 50),
+    ease: "inQuad",
+  })
+  .add(vineSelectorsDrawable, {
+    draw: ["0 1", "0 0"],
+    duration: 400,
+    delay: () => utils.random(0, 500, 50),
+    easing: "inOutSine",
+  }, "<<")
+  .label("api-end")
   /**
    * Logo formation animation
    */
@@ -198,16 +208,14 @@ mainTimeline
     ease: "inOutQuad",
   })
   .add([
-    elementSelector("left-tree-trunk"),
-    elementSelector("left-tree-bottom"),
-    elementSelector("left-tree-top"),
-    elementSelector("right-tree-trunk"),
-    elementSelector("right-tree-top"),
+    elementSelector("center-tree-trunk"),
+    elementSelector("center-tree-bottom"),
+    elementSelector("center-tree-mid"),
+    elementSelector("center-tree-top"),
   ], {
-    opacity: 0,
-    duration: 400,
-    ease: "inOutQuad",
-  }, '<<')
+    translateY: 0,
+    duration: 200,
+  }, "<<-=400")
   .add([
     elementSelector("left-bracket"),
     elementSelector("right-bracket"),
@@ -219,7 +227,7 @@ mainTimeline
     translateX: { to: -86 },
     duration: 400,
     ease: "inOutQuad",
-  })
+  }, "-=300")
   .add(elementSelector("logo"), { // show logo
     opacity: [0, 1],
     scale: [0.8, 1],
@@ -233,41 +241,6 @@ mainTimeline
     ease: "inQuad",
   }, "+=2000")
   .label("end-sequence-end")
-  /**
-   * Text animations
-   */
-  .label("text-start")
-  .add(elementSelector("text-line-1"), {
-    opacity: [0, 1],
-    scale: [0.8, 1],
-    translateY: [2, 0],
-    duration: 150,
-    ease: easeSpring,
-  }, "trees-start+=50")
-  .add(elementSelector("text-line-2"), {
-    opacity: [0, 1],
-    scale: [0.8, 1],
-    translateY: [2, 0],
-    duration: 150,
-    ease: easeSpring,
-  }, "<<+=50")
-  .add(elementSelector("text-line-3"), {
-    opacity: [0, 1],
-    scale: [0.8, 1],
-    translateY: [2, 0],
-    duration: 150,
-    ease: easeSpring,
-  }, "trees-end")
-  .add([
-    elementSelector("text-line-1"),
-    elementSelector("text-line-2"),
-    elementSelector("text-line-3"),
-  ], {
-    opacity: { to: 0 },
-    translateY: 15,
-    duration: 150,
-    ease: "inQuad",
-  }, "logo-start")
   .add({}, {}, "+=2000") // pause before loop
 ;
 

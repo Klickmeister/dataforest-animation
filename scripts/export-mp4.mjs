@@ -3,7 +3,8 @@ import { execSync } from "node:child_process";
 import puppeteer from "puppeteer";
 import { set } from "animejs";
 
-const URL = process.env.CAPTURE_URL || "http://localhost:5173/dataforest-animation/export-canvas.html";
+const PORT = process.env.PORT || 5173;
+const URL = process.env.CAPTURE_URL || `http://localhost:${PORT}/dataforest-animation/export-canvas.html`;
 const outDir = "frames";
 const outFile = "out.mp4";
 
@@ -31,7 +32,7 @@ await page.goto(URL, { waitUntil: "networkidle0" });
 const duration = await page.evaluate(() => window.__CAPTURE__?.duration);
 if (!duration) {
   await browser.close();
-  throw new Error("window.__CAPTURE__ not found");
+  throw new Error("window.__CAPTURE__ not found. Is server running and does the page set window.__CAPTURE__?");
 }
 
 // pause animation

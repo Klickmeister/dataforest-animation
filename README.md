@@ -63,5 +63,6 @@ To update the animation FPS, width, and height, you can set the following enviro
 - `WIDTH`: Width of the output video in pixels (default: 1080)
 - `HEIGHT`: Height of the output video in pixels (default: 1920)
 - `CRF`: Constant Rate Factor for video quality (default: 18)
+- `PORT`: Port for the server containing the animation (default: 5173)
 
-To change to animation you have to update the `export-canvas.html` file in the `/` folder and the `export-canvas.ts` file in the `src/` folder.
+To change the animation you have to update the `export-canvas.html` file in the `/` folder and the `export-canvas.ts` file in the `src/` folder.

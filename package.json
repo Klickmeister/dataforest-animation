@@ -10,11 +10,11 @@
     "export:mp4": "node scripts/export-mp4.mjs",
     "export:mp4:4k": "FPS=60 WIDTH=2160 HEIGHT=3840 node scripts/export-mp4.mjs",
     "export:mp4:4k-quer": "FPS=60 WIDTH=3840 HEIGHT=2160 node scripts/export-mp4.mjs"
-
   },
   "devDependencies": {
     "typescript": "~5.9.3",
-    "vite": "^7.2.4"
+    "vite": "^7.2.4",
+    "vite-plugin-html": "^3.2.2"
   },
   "dependencies": {
     "animejs": "^4.2.2",
