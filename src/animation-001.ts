@@ -6,6 +6,7 @@ const elementSelector = (selector: string) => {
 };
 
 const SHOW_LOGO_DELAY = 1000; // Delay before fading out text and showing logo
+const TEXT_1_PAUSE = 500; // Delay after showing text 1 and asterix
 
 if (document.querySelector(CANVAS_SELECTOR) === null) {
   // don't run animation if canvas is not present
@@ -80,7 +81,7 @@ mainTimeline
     ease: "outBack",
   })
   .label("show-asterisk-end")
-  
+  .add({}, {}, `+=${TEXT_1_PAUSE}`) // pause before rain starts
   /**
    * Rain animation
    */
@@ -143,6 +144,7 @@ mainTimeline
     ease: "outQuad",
     delay: utils.stagger(70),
   }, "rain-start+=2000")
+  // .add({}, {}, `+=500`) // delay before text disappears
   .label("rain-end")
   /**
    * Tree grow animation
@@ -233,14 +235,14 @@ mainTimeline
     translateY: [2, 0],
     duration: 150,
     ease: easeSpring,
-  }, "show-asterisk-end-=150")
+  }, "rain-start")
   .add(elementSelector("text-line-3"), {
     opacity: [0, 1],
     scale: [0.8, 1],
     translateY: [2, 0],
     duration: 150,
     ease: easeSpring,
-  }, "rain-end-=700")
+  }, "rain-end-=2000")
   .add([
     elementSelector("text-line-1"),
     elementSelector("text-line-2"),
