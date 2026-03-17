@@ -5,6 +5,8 @@ const elementSelector = (selector: string) => {
   return `${CANVAS_SELECTOR} [data-js-anim-el='${selector}']`;
 };
 
+const SHOW_LOGO_DELAY = 1000; // Delay before fading out text and showing logo
+
 if (document.querySelector(CANVAS_SELECTOR) === null) {
   // don't run animation if canvas is not present
   throw new Error("Animation canvas not found");
@@ -183,6 +185,7 @@ mainTimeline
     duration: 600,
     ease: "inOutQuad",
   }, "-=800")
+  .add({}, {}, `+=${SHOW_LOGO_DELAY}`) // delay before logo appears
   .add([
     elementSelector("left-bracket"),
     elementSelector("right-bracket"),
@@ -199,7 +202,7 @@ mainTimeline
     translateX: 0,
     duration: 250,
     ease: "inOutQuad",
-  }, "<<")
+  }, "-=250")
   .add(elementSelector("logo"), { // show logo
     opacity: [0, 1],
     scale: [0.8, 1],
@@ -223,21 +226,21 @@ mainTimeline
     translateY: [2, 0],
     duration: 150,
     ease: easeSpring,
-  }, "show-asterisk-start-=300")
+  }, "show-asterisk-start-=0")
   .add(elementSelector("text-line-2"), {
     opacity: [0, 1],
     scale: [0.8, 1],
     translateY: [2, 0],
     duration: 150,
     ease: easeSpring,
-  }, "show-asterisk-end-=100")
+  }, "show-asterisk-end-=150")
   .add(elementSelector("text-line-3"), {
     opacity: [0, 1],
     scale: [0.8, 1],
     translateY: [2, 0],
     duration: 150,
     ease: easeSpring,
-  }, "rain-end-=1000")
+  }, "rain-end-=700")
   .add([
     elementSelector("text-line-1"),
     elementSelector("text-line-2"),
@@ -247,7 +250,7 @@ mainTimeline
     translateY: 15,
     duration: 150,
     ease: "inQuad",
-  }, "tree-grow-end")
+  }, `tree-grow-end+=${SHOW_LOGO_DELAY}`) // delay before text disappears
   .add({}, {}, "+=2000") // pause before loop
 ;
 
