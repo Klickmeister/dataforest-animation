@@ -3,7 +3,7 @@ import './main.css';
 
 /** BEGIN DROP IN */
 
-import './animation-003';
+import './animation-004';
 
 /** END DROP IN */
 
