@@ -19,33 +19,41 @@ function resetSprites() {
   utils.set( // first frame setup
     elementSelector("left-bracket"),
   {
-    opacity: 1,
+    opacity: 0,
     scale: 1,
     translateX: -10, // initial x offset
+    translateY: 5, // initial y offset
   });
   utils.set(
     elementSelector("right-bracket"),
   {
-    opacity: 1,
+    opacity: 0,
     scale: 1,
     translateX: 10, // initial x offset
+    translateY: 5, // initial y offset
   });
   utils.set([
+    elementSelector("left-bracket-1"),
+    elementSelector("right-bracket-1"),
+  ], {
+    opacity: 0,
+    scale: 1,
+    translateY: 5, // initial y offset
+  });
+  utils.set([
+    elementSelector("logo"),
     elementSelector("tree-trunk"),
     elementSelector("tree-bottom"),
     elementSelector("tree-mid"),
     elementSelector("tree-top"),
   ], {
-    translateY: 5,
     opacity: 0,
     scale: 1,
+    translateY: 5, // initial y offset
   })
   utils.set([ // everything else
-    elementSelector("left-bracket-1"),
-    elementSelector("right-bracket-1"),
     elementSelector("left-bracket-2"),
     elementSelector("right-bracket-2"),
-    elementSelector("logo"),
     elementSelector("vine-points") + " path",
     elementSelector("vines") + " path",
     elementSelector("background-dots") + " path",
@@ -97,7 +105,7 @@ const randomSeed = utils.random(0, 1_000_000);
 
 const mainTimeline = createTimeline({
   autoplay: true,
-  loop: false,
+  loop: true,
 });
 
 mainTimeline
@@ -147,6 +155,7 @@ mainTimeline
           : elementSelector("right-bracket-2"),
       )?.getAttribute("d") ?? "",
     translateX: 0,
+    translateY: 0,
     ease: easeSpring,
   })
   .label("tree-grow-start")
@@ -242,6 +251,7 @@ mainTimeline
           : elementSelector("right-bracket-1"),
       )?.getAttribute("d") ?? "",
     x: 0,
+    translateY: 5,
     duration: 600,
     ease: "inOutQuad",
   })
@@ -257,32 +267,12 @@ mainTimeline
     duration: 400,
     ease: "inOutQuad",
   }, "-=300")
-  .add([
-    elementSelector("tree-trunk"),
-    elementSelector("tree-bottom"),
-    elementSelector("tree-mid"),
-    elementSelector("tree-top"),
-  ], {
-    translateY: 0,
-    duration: 400,
-    ease: "inOutSine",
-  }, "<<")
   .add(elementSelector("logo"), { // show logo
     opacity: [0, 1],
     scale: [0.8, 1],
     duration: 300,
     ease: "outBack",
   }, "-=200")
-  .label("end-sequence-start")
-  .add(CANVAS_SELECTOR + " path", { // fade out everything
-    opacity: 0,
-    duration: 600,
-    ease: "inQuad",
-  }, "+=2000")
-  .label("end-sequence-end")
-  /**
-   * Text animations
-   */
   .label("text-start")
   .add(elementSelector("text-line-1"), {
     opacity: [0, 1],
