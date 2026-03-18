@@ -4,6 +4,7 @@ import './animation-001/horizontal';
 import './animation-001/vertical';
 import './animation-002';
 import './animation-003';
+import './animation-004';
 
 declare global {
   interface Window {

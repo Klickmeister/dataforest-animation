@@ -73,6 +73,10 @@
   min-width: 120px;
 }
 
+.visual__text.visual--api {
+  right: 18%;
+}
+
 
 .visual--vertical .visual__text {
   right: 50%;
