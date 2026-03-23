@@ -270,9 +270,14 @@ mainTimeline
   .add(elementSelector("logo"), { // show logo
     opacity: [0, 1],
     scale: [0.8, 1],
-    duration: 300,
+    duration: 1500,
     ease: "outBack",
   }, "-=200")
+  .add(CANVAS_SELECTOR + ' path', { // fade out everything
+    opacity: 0,
+    duration: 600,
+    ease: 'inQuad',
+  }, '+=2000')
   .label("text-start")
   .add(elementSelector("text-line-1"), {
     opacity: [0, 1],
